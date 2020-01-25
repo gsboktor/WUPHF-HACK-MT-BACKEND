@@ -18,19 +18,19 @@ export const handler = (
   res: functions.Response
 ): void => {
   cors(req, res, () => {
-    const phone_number = req.body.phone_number;
+    const phone = req.body.phone;
     const carrier = req.body.carrier;
     const message = req.body.message;
     const from = req.body.from;
 
     const mailOptions = {
       from: "WUPHF <justwuphfit@gmail.com>",
-      to: phone_number + carrier,
-      subject: "WHUF from " + from,
+      to: phone + carrier,
+      subject: "WUPHF from " + from,
       text: message
     };
 
-    return transporter.sendMail(mailOptions, (erro, _) => {
+    transporter.sendMail(mailOptions, (erro, _) => {
       if (erro) {
         return res.send(erro.toString());
       }

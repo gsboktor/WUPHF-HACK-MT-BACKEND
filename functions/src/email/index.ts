@@ -26,11 +26,11 @@ export const handler = (
     const mailOptions = {
       from: "WUPHF <justwuphfit@gmail.com>",
       to: dest,
-      subject: "WHUF from " + from,
+      subject: "WUPHF from " + from,
       text: message
     };
 
-    return transporter.sendMail(mailOptions, (erro, _) => {
+    transporter.sendMail(mailOptions, (erro, _) => {
       if (erro) {
         return res.send(erro.toString());
       }
