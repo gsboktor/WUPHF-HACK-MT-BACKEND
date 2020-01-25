@@ -4,34 +4,36 @@ import * as nodemailer from "nodemailer";
 const cors = require("cors")({ origin: true });
 admin.initializeApp();
 
-let transporter = nodemailer.createTransport({
-  service: "gmail",
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
     user: "justwuphfit@gmail.com",
     pass: "hackmt123"
   }
 });
-
 exports.sendMail = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
-    const dest = req.query.dest;
+    const dest = req.body.dest;
+    console.log(dest);
+    const message = req.body.message;
+    const from = req.body.from;
 
     const mailOptions = {
-      from: "WUPHF <justwuphfit@gmail.com>", // Something like: Jane Doe <janedoe@gmail.com>
+      from: "WUPHF <justwuphfit@gmail.com>",
       to: dest,
-      subject: "I'M A PICKLE!!!", // email subject
-      html: `<p style="font-size: 16px;">Pickle Riiiiiiiiiiiiiiiick!!</p>
-              <br />
-              <img src="https://images.prod.meredith.com/product/fc8754735c8a9b4aebb786278e7265a5/1538025388228/l/rick-and-morty-pickle-rick-sticker" />
-          ` // email content in HTML
+      subject: "WHUF from " + from,
+      text: message
     };
 
-    // returning result
     return transporter.sendMail(mailOptions, (erro, _) => {
       if (erro) {
         return res.send(erro.toString());
       }
-      return res.send("Sended");
+      return res.send({
+        status: "success"
+      });
     });
   });
 });
