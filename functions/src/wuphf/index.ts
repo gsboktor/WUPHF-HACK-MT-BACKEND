@@ -18,7 +18,7 @@ export const handler = (
 
   getUser(fromUUID, (fromUser: FirebaseFirestore.DocumentData) => {
     getUser(toUUID, toUser => {
-      sendEmail(toUser.email, fromUser.username, "my ass");
+      sendEmail(toUser.email, fromUser.username, message);
       sendText(toUser.phone, toUser.carrier, fromUser.username, message);
       res.send({
         status: "finished"
